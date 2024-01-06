@@ -27,26 +27,17 @@ namespace KohYoungTest
         #endregion
 
         #region Public Properties
-        private ObservableCollection<Word> word;
-        public ObservableCollection<Word> Words
-        {
-            get { return word; }
-            set { word = value; }
-        }
 
-        private Input input;
-        public Input Input
-        {
-            get { return input; }
-            set {input = value; OnPropertyChanged(nameof(Input));}
-        }
+        public ObservableCollection<Word> Words { get; set; }
 
+        public Input Input { get; set; }
+       
         #endregion
 
         #region Private Methods
         private void DataBind()
         {
-            if (string.IsNullOrWhiteSpace(Input.Text))
+            if (string.IsNullOrWhiteSpace(Input?.Text))
                 return;
 
             string[] words = Input.Text.Split(' ');
