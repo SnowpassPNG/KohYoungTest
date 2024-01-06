@@ -8,10 +8,10 @@ namespace KohYoungTest
     /// <summary>
     /// This is my ViewModel
     /// </summary>
-    public class MainVM : Notifier
+    public class MainVM
     {
         #region Delegates and Events
-        public ICommand ReverseCmd => new DelegateCommand(DataBind);
+        public ICommand ReverseCmd => new DelegateCommand(OnReverse);
         #endregion
 
         #region Fields
@@ -27,39 +27,36 @@ namespace KohYoungTest
         #endregion
 
         #region Public Properties
-        private ObservableCollection<Word> word;
-        public ObservableCollection<Word> Words
-        {
-            get { return word; }
-            set { word = value; }
-        }
 
-        private Input input;
-        public Input Input
-        {
-            get { return input; }
-            set {input = value; OnPropertyChanged(nameof(Input));}
-        }
+        public ObservableCollection<Word> Words { get; set; }
 
+        public Input Input { get; set; }
+       
         #endregion
 
         #region Private Methods
+        private void OnReverse()
+        {
+            if (string.IsNullOrWhiteSpace(Input?.Text))
+            {
+                Words.Clear();
+                return;
+            }
+                
+            DataBind();
+        }
+
         private void DataBind()
         {
-            if (string.IsNullOrWhiteSpace(Input.Text))
-                return;
-
             string[] words = Input.Text.Split(' ');
-
             if (previous.Equals(Input.Text))
-                    Array.Reverse(words);
-             
-            Words.Clear();
+                Array.Reverse(words);
 
-            Array.ForEach(words,  word =>  {
+            Words.Clear();
+            Array.ForEach(words, word => {
                 Words.Add(new Word { Text = word, Length = word.Length });
             });
-            
+
             Input.Text = string.Join(" ", words);
             previous = Input.Text;
         }

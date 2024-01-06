@@ -12,11 +12,9 @@ namespace KohYoungTest
         public int Length { get; set; }
     }
 
-    public class Input : Notifier
+    public class Input
     {
-
-        private string input;
-        public string Text { get { return input; } set { input = value; OnPropertyChanged(nameof(Text)); } }
+        public string Text { get; set; }
     }
 
 }
